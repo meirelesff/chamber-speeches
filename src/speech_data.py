@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-from io import BytesIO
 import pandas as pd
 import requests
 import os
@@ -35,15 +34,12 @@ class DiscursosCamara:
         self.db = self.cl[self.dbname]
         self.coll = self.db[self.collname]
 
-    def drop_collection(self):
-        self.coll.drop()
-
     def lista_deps_camara(self):
         # Extract deputies' ids from the chambers' website
         url = "https://dadosabertos.camara.leg.br/arquivos/deputados/csv/deputados.csv"
         deps = pd.read_csv(url, sep=";")
         deps = deps.loc[(deps.idLegislaturaInicial >= self.start_legis) | (deps.idLegislaturaFinal >= self.start_legis)]
-        deps = deps[["uri", "nome", "siglaSexo"]]
+        deps = deps[["uri"]]
         deps.loc[:, "uri"] = deps.loc[:, "uri"].apply(lambda x: x.split("/")[6])
         self.deps = deps
 
