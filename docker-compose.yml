@@ -6,12 +6,12 @@ services:
         ports:
             - "27017:27017"
         container_name: db
-        restart: always
+        restart: unless-stopped
         volumes: 
-            - ./data:/data/db
+            - dbdata:/data/db
         environment:
-            - MONGO_INITDB_ROOT_USERNAME=admin
-            - MONGO_INITDB_ROOT_PASSWORD=admin
+            MONGO_INITDB_ROOT_USERNAME : "admin"
+            MONGO_INITDB_ROOT_PASSWORD : "admin"
         networks:
             - rede
 
@@ -19,18 +19,21 @@ services:
         build:
             context: ./src
             dockerfile: Dockerfile
-        container_name: python3.8
+        container_name: etl_python3.8
         depends_on: 
             - db
         environment: 
-            - MONGOADD=mongodb://admin:admin@db:27017/ 
-            - DBNAME=camara 
-            - COLLNAME=discursos 
-            - START_LEGIS=52
+            MONGOADD : "mongodb://admin:admin@db:27017/"
+            DBNAME : "camara"
+            COLLNAME : "discursos" 
+            START_LEGIS : 52
         networks:
             - rede
 
 networks:
     rede:
         driver: bridge
+
+volumes:
+    dbdata:
         

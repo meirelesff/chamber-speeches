@@ -23,7 +23,7 @@ class DiscursosCamara:
             - start_legis: ID of initial legislature
     '''
     def __init__(self, mongo_add, dbname, collname, start_legis):
-        self.start_legis = start_legis
+        self.start_legis = int(start_legis)
         self.mongo_host = mongo_add
         self.dbname = dbname
         self.collname = collname
