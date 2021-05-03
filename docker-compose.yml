@@ -10,8 +10,8 @@ services:
         volumes: 
             - dbdata:/data/db
         environment:
-            MONGO_INITDB_ROOT_USERNAME : "admin"
-            MONGO_INITDB_ROOT_PASSWORD : "admin"
+            MONGO_INITDB_ROOT_USERNAME : admin
+            MONGO_INITDB_ROOT_PASSWORD : admin
         networks:
             - rede
 
@@ -23,10 +23,10 @@ services:
         depends_on: 
             - db
         environment: 
-            MONGOADD : "mongodb://admin:admin@db:27017/"
-            DBNAME : "camara"
-            COLLNAME : "discursos" 
-            START_LEGIS : 52
+            MONGOADD: "mongodb://admin:admin@db:27017/"
+            DBNAME: camara
+            COLLNAME: discursos
+            START_LEGIS: 52
         networks:
             - rede
 
